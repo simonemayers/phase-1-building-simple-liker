@@ -4,6 +4,27 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+const errorBar = document.querySelector("#modal")
+
+document.body.addEventListener("click", (e) => {
+  if(e.target.innerText === EMPTY_HEART || e.target.innerText === FULL_HEART){
+    mimicServerCall().then(()=> {
+      if(e.target.innerText === EMPTY_HEART){
+        e.target.className ="activated-heart"
+        e.target.innerText = FULL_HEART
+      }
+      else if(e.target.innerText === FULL_HEART){
+        e.target.className =""
+        e.target.innerText = EMPTY_HEART
+      }
+    })
+      .catch((error) => {
+      errorBar.className = ""
+      errorBar.innerText = error
+      setTimeout(() => errorBar.className = "hidden", 3000)
+    })
+  }
+})
 
 
 
@@ -23,3 +44,4 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+
